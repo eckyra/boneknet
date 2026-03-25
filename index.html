@@ -37,11 +37,16 @@
                 <label class="form-label">No KTP (16 Digit)</label>
                 <input type="number" id="ktp" class="form-control">
             </div>
+<div class="mb-3">
+    <label class="form-label">Foto KTP</label>
+    <input type="file" id="foto_ktp" class="form-control" accept="image/*">
+</div>
 
-            <div class="mb-3">
-                <label class="form-label">Foto Depan Rumah (1-2 Foto)</label>
-                <input type="file" id="foto" class="form-control" accept="image/*" multiple>
-            </div>
+<div class="mb-3">
+    <label class="form-label">Foto Depan Rumah </label>
+    <input type="file" id="foto_rumah" class="form-control" accept="image/*" multiple>
+</div>
+           
 
             <div id="gps-info" class="status-gps">📍 Menunggu izin lokasi...</div>
 
@@ -49,15 +54,7 @@
         </div>
     </div>
 
-    <div class="mb-3">
-    <label class="form-label">Foto KTP</label>
-    <input type="file" id="foto_ktp" class="form-control" accept="image/*">
-</div>
-
-<div class="mb-3">
-    <label class="form-label">Foto Depan Rumah (1-2 Foto)</label>
-    <input type="file" id="foto_rumah" class="form-control" accept="image/*" multiple>
-</div>
+    
 
 <script>
 async function prosesData() {
