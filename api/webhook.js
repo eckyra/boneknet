@@ -8,7 +8,7 @@ export default async (req, res) => {
 
     if (message && message.text === '/start') {
       const chatId = message.chat.id;
-      const text = "Halo Mas Ecky! Silakan klik tombol di bawah untuk input data.";
+      const text = "Halo! Silakan klik tombol di bawah untuk input data.";
 
       try {
         await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
