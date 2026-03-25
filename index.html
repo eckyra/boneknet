@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -150,8 +151,14 @@
                     body: JSON.stringify(payload)
                 });
 
-                alert(`INPUT DATA PELANGGAN ${brandName} BERHASIL`);
-                location.reload();
+                Swal.fire({
+    title: 'Berhasil!',
+    text: `INPUT DATA PELANGGAN ${brandName} BERHASIL`,
+    icon: 'success',
+    confirmButtonColor: '#28a745'
+}).then(() => {
+    location.reload(); // Web akan refresh otomatis SETELAH user klik OK
+});
 
             } catch (e) {
                 alert("Gagal: " + e.message);
