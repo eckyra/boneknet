@@ -108,21 +108,21 @@
 
         // --- 3. PROSES KIRIM DATA ---
         async function prosesData() {
-            const btn = document.getElementById('btnKirim');
-            const fileKtp = document.getElementById('foto_ktp').files[0];
-            const filesRumah = document.getElementById('foto_rumah').files;
-            
-            if(!fileKtp) return alert("Foto KTP wajib diupload!");
-            if(filesRumah.length === 0) return alert("Foto rumah minimal 1!");
+    const btn = document.getElementById('btnKirim');
+    const fileKtp = document.getElementById('foto_ktp').files[0];
+    const filesRumah = document.getElementById('foto_rumah').files;
+    
+    // --- VALIDASI AWAL ---
+    if(!fileKtp) return alert("Foto KTP wajib diupload!");
+    if(filesRumah.length === 0) return alert("Foto rumah minimal 1!");
+    
+    // --- TAMBAHAN VALIDASI LOKASI DI SINI ---
+    if(!koordinat.includes(",")) {
+        return alert("Tunggu sebentar! Titik lokasi GPS belum terkunci. Pastikan GPS aktif atau klik tulisan 'Menunggu izin lokasi' untuk memuat ulang.");
+    }
 
-            btn.disabled = true;
-            btn.innerText = "Sedang Mengupload...";
-
-            const getBase64 = (file) => new Promise(r => {
-                const reader = new FileReader();
-                reader.onload = () => r({ base64: reader.result.split(',')[1], mimeType: file.type });
-                reader.readAsDataURL(file);
-            });
+    btn.disabled = true;
+    btn.innerText = "Sedang Mengupload...";
 
             try {
                 const dataKtp = await getBase64(fileKtp);
