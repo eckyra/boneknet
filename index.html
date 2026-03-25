@@ -113,3 +113,43 @@ async function prosesData() {
     }
 }
 </script>
+    <script>
+    let koordinat = "Mencari...";
+
+    function ambilLokasi() {
+        const statusGps = document.getElementById('gps-info');
+        
+        const options = {
+            enableHighAccuracy: true, // Memaksa pakai GPS, bukan cuma Tower/WiFi
+            timeout: 10000,           // Tunggu maksimal 10 detik
+            maximumAge: 0             // Jangan pakai lokasi lama yang tersimpan
+        };
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (p) => { 
+                    koordinat = `${p.coords.latitude},${p.coords.longitude}`;
+                    statusGps.innerText = "✅ Lokasi Terkunci: " + koordinat;
+                    statusGps.style.color = "green";
+                },
+                (err) => { 
+                    // Jika error, kasih tau penyebabnya
+                    let pesan = "Gagal ambil lokasi.";
+                    if(err.code == 1) pesan = "❌ Izin lokasi ditolak browser.";
+                    if(err.code == 2) pesan = "❌ GPS tidak terdeteksi/lemah.";
+                    if(err.code == 3) pesan = "❌ Waktu pencarian lokasi habis.";
+                    
+                    statusGps.innerText = pesan + " Klik untuk coba lagi.";
+                    statusGps.style.color = "red";
+                    statusGps.style.cursor = "pointer";
+                }, 
+                options
+            );
+        } else {
+            statusGps.innerText = "❌ Browser tidak mendukung GPS.";
+        }
+    }
+
+    // Jalankan saat web dibuka
+    window.onload = ambilLokasi;
+</script>
