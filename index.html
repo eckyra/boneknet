@@ -1,0 +1,43 @@
+<script>
+  let locationString = "";
+
+  // Ambil lokasi otomatis
+  navigator.geolocation.getCurrentPosition((pos) => {
+    locationString = `${pos.coords.latitude}, ${pos.coords.longitude}`;
+  });
+
+  async function submitForm() {
+    const files = document.getElementById('foto').files;
+    const imageData = [];
+
+    // Konversi file ke Base64 agar bisa dikirim ke GAS
+    for (let file of files) {
+      const base64 = await toBase64(file);
+      imageData.push({ base64: base64.split(',')[1], mimeType: file.type });
+    }
+
+    const payload = {
+      nama: document.getElementById('nama').value,
+      alamat: document.getElementById('alamat').value,
+      no_hp: document.getElementById('hp').value,
+      lokasi: locationString,
+      no_ktp: document.getElementById('ktp').value,
+      images: imageData
+    };
+
+    // Kirim ke URL Web App GAS Mas Ecky
+    fetch('https://script.google.com/macros/s/AKfycbyBD4YkuvZCYIRFBlaSbHXz7YAEVZOFypnb6QOmlDyycqUQMeReN6cwgpjgOwU8UX0b4Q/exec', {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    }).then(res => {
+      tg.close(); // Tutup Mini App setelah sukses
+    });
+  }
+
+  const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+</script>
